@@ -1,4 +1,4 @@
-# fly.toml file generated for ajet-phonebook-backend on 2023-01-19T15:12:19+08:00
+# fly.toml file generated for ajet-phonebook-backend on 2023-01-19T15:39:35+08:00
 
 app = "ajet-phonebook-backend"
 kill_signal = "SIGINT"
