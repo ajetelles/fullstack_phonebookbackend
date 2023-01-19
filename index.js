@@ -92,13 +92,13 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
-// dev part
-const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+// // dev part
+// const PORT = 3001
+// app.listen(PORT)
+// console.log(`Server running on port ${PORT}`)
 
-// // build
-// const PORT = process.env.PORT || 8080
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`)
-// })
+// build
+const PORT = process.env.PORT || 8080
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
