@@ -11,9 +11,9 @@ app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
 
-morgan.token('requestdata', (req, res) => JSON.stringify(req.body))
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :requestdata', 
-{ stream: process.stdout }))
+morgan.token('requestdata', (req) => JSON.stringify(req.body))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :requestdata',
+    { stream: process.stdout }))
 
 // let persons = [
 //     {
@@ -82,7 +82,7 @@ app.get('/api/persons/:id', (request,response) => {
     // }
 })
 
-// post 
+// post
 app.post('/api/persons', (request, response, next) => {
     const body = request.body
     if(!body.name || !body.number) {
@@ -123,7 +123,7 @@ app.post('/api/persons', (request, response, next) => {
 })
 
 //put localhost:3001/api/persons/id; if name/number exists
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
     Person.updateOne(request.params.id , request.body)
     Person.findById(request.params.id)
         .then(result => {
@@ -143,7 +143,7 @@ app.put('/api/persons/:id', (request, response) => {
 // delete localhost:3001/api/persons/id
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-        .then(result => {
+        .then(() => {
             response.status(204).end()
         })
         .catch(error => next(error))
@@ -166,7 +166,7 @@ app.listen(PORT, () => {
 
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
-  }
+}
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {

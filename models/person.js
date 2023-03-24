@@ -5,7 +5,7 @@ const url = process.env.MONGODB_URI
 
 console.log("Connecting to database...")
 mongoose.connect(url)
-    .then(result => {
+    .then(() => {
         console.log("Connected to Mongo server")
     })
     .catch((error) => {
@@ -32,7 +32,7 @@ const personSchema = new mongoose.Schema({
             validator: (v) => {
                 return /^\d{8,}$/.test(v) || /^(\d{2,3}-)?\d{5,}$/.test(v) 
             },
-            message: props => `Number needs to be at least 8 digits with formats XXXXXXXX, XX-XXXXXX or XXX-XXXXX`
+            message: () => `Number needs to be at least 8 digits with formats XXXXXXXX, XX-XXXXXX or XXX-XXXXX`
         }
     },
     id: Number
@@ -40,9 +40,9 @@ const personSchema = new mongoose.Schema({
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
-      delete returnedObject.__v
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
     }
 })
 
